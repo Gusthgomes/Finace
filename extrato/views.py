@@ -4,6 +4,12 @@ from . models import Valores
 from django.contrib import messages
 from django.contrib.messages import constants
 from datetime import datetime
+from django.template.loader import render_to_string
+import os
+from django.conf import settings
+#from weasyprint import HTML
+from io import BytesIO
+from django.http import FileResponse
 
 def novo_valor(request):
     if request.method == "GET":
@@ -52,6 +58,8 @@ def view_extrato(request):
  
     valores = Valores.objects.filter(data__month=datetime.now().month)
 
+    #TODO: criar 2 botoês, um para resetar os filtros e outro para filtrar por data
+
     if conta_get:
         valores = valores.filter(conta__id=conta_get)
 
@@ -61,7 +69,8 @@ def view_extrato(request):
     return render(request, 'view_extrato.html', {'valores': valores, 'contas': contas, 'categorias': categorias})
 
 def exportar_pdf(request):
-    valores = Valores.objects.filter(data__month=datetime.now().month)
+    pass
+    '''valores = Valores.objects.filter(data__month=datetime.now().month)
     contas = Conta.objects.all()
     categorias = Categoria.objects.all()
     
@@ -74,4 +83,4 @@ def exportar_pdf(request):
     path_output.seek(0)
     
 
-    return FileResponse(path_output, filename="extrato.pdf")
+    return FileResponse(path_output, filename="extrato.pdf")'''
