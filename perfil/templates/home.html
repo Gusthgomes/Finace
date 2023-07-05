@@ -78,9 +78,11 @@
                     <div class="row">
                         <div class="col-md">
                             <div class="saldo">
-                                <span class="fonte-destaque">Saldo mensal</span>
-                                <br>
-                                <span class="font-light">R$ 0.000,00</span>
+                                {% for conta in contas %}
+                                    <span class="fonte-destaque">Saldo mensal</span>
+                                    <br>
+                                    <span class="font-light">R$ {{conta.valor}}</span>
+                                {% endfor %}
                             </div>
                         </div>
                         <div class="col-md">
