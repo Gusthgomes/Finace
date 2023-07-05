@@ -3,6 +3,7 @@ from perfil.models import Conta, Categoria
 from . models import Valores
 from django.contrib import messages
 from django.contrib.messages import constants
+from datetime import datetime
 
 def novo_valor(request):
     if request.method == "GET":
@@ -42,3 +43,13 @@ def novo_valor(request):
 
         messages.add_message(request, constants.SUCCESS, 'Categoria cadastrada com sucesso')
         return redirect('/extrato/novo_valor')
+    
+def view_extrato(request):
+    contas = Conta.objects.all()
+    categorias = Categoria.objects.all()
+
+        
+    valores = Valores.objects.filter(data__month=datetime.now().month)
+ 
+
+    return render(request, 'view_extrato.html', {'valores': valores, 'contas': contas, 'categorias': categorias})
