@@ -1,5 +1,5 @@
 from django.db import models
-from ..perfil.models import Conta, Categoria
+from perfil.models import Conta, Categoria
 
 class Valores(models.Model):
     choice_tipo = (
