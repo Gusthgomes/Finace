@@ -40,14 +40,13 @@ def novo_valor(request):
 
         if tipo == 'E':
             conta.valor += int(valor)
+            messages.add_message(request, constants.SUCCESS, 'Depósito realizado com sucesso!')
         else:
             conta.valor -= int(valor)
-
-        #TODO: gerar uma mensagem de saída de acordo com o tipo ( se for saída ou entrada)
+            messages.add_message(request, constants.ERROR, 'Retirada realizado com sucesso!')
 
         conta.save()
 
-        messages.add_message(request, constants.SUCCESS, 'Cadastro realizado com sucesso!')
         return redirect('/extrato/novo_valor')
     
 def view_extrato(request):
@@ -58,7 +57,7 @@ def view_extrato(request):
  
     valores = Valores.objects.filter(data__month=datetime.now().month)
 
-    #TODO: criar 2 botoês, um para resetar os filtros e outro para filtrar por data
+    #TODO: criar um botoês para filtrar por data
 
     if conta_get:
         valores = valores.filter(conta__id=conta_get)
