@@ -3,13 +3,14 @@ from perfil.models import Conta, Categoria
 from . models import Valores
 from django.contrib import messages
 from django.contrib.messages import constants
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.template.loader import render_to_string
 import os
 from django.conf import settings
 from weasyprint import HTML
 from io import BytesIO
 from django.http import FileResponse
+
 
 def novo_valor(request):
     if request.method == "GET":
@@ -55,7 +56,7 @@ def view_extrato(request):
     conta_get = request.GET.get('conta')
     categoria_get = request.GET.get('categoria')
  
-    valores = Valores.objects.filter(data__month=datetime.now().month)
+    '''valores = Valores.objects.filter(data__month=datetime.now().month)'''
 
     #TODO: criar um botoês para filtrar por data
 
@@ -64,6 +65,26 @@ def view_extrato(request):
 
     if categoria_get:
         valores = valores.filter(categoria__id=categoria_get)
+    
+    valores = Valores.objects.all()
+    data_atual = datetime.now().date()
+
+    if valores == "Últimos 7 dias":
+        data_inicial = data_atual - timedelta(days=7)
+        print(data_inicial)
+    elif valores == "Últimos 14 dias":
+        data_inicial = data_atual - timedelta(days=14)
+        print(data_inicial)
+    elif valores == "Últimos 20 dias":
+        data_inicial = data_atual - timedelta(days=20)
+        print(data_inicial)
+    elif valores == "Últimos 31 dias":
+        data_inicial = data_atual - timedelta(days=31)
+        print(data_inicial)
+    else:
+        #Caso selecione uma opção inválida
+        messages.add_message(request, constants.ERROR, 'Opção inválida!')
+        return render(request, 'view_extrato.html')
 
     return render(request, 'view_extrato.html', {'valores': valores, 'contas': contas, 'categorias': categorias})
 
