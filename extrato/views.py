@@ -58,8 +58,6 @@ def view_extrato(request):
  
     '''valores = Valores.objects.filter(data__month=datetime.now().month)'''
 
-    #TODO: criar um botoês para filtrar por data
-
     if conta_get:
         valores = valores.filter(conta__id=conta_get)
 
