@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.messages import constants
 from datetime import datetime
 
+
 def definir_contas(request):
     if request.method == "GET":
         categorias = Categoria.objects.all()
@@ -47,3 +48,7 @@ def ver_contas(request):
     return render(request, 'ver_contas.html', {'contas_vencidas': contas_vencidas, 'contas_proximas_vencimento': contas_proximas_vencimento, 'restantes': restantes})
 
 # TODO: implement url of accounts payment
+
+def pagamentos(request):
+    if request.method == "GET":
+        return render(request, 'pagamentos.html')
